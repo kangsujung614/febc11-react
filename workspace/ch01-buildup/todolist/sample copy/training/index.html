@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List App</title>
+  </head>
+  <body>
+    <div id="todo">
+      <header>
+        <h1>Todo List :)</h1>
+        <p>파일 경로: <span id="filepath"></span></p>
+      </header>
+      <div id="main">
+        <div id="container">
+          <ul>
+            <li>
+              <h2>쇼핑 목록</h2>
+              <div class="todoinput">
+                <input type="text" autofocus />
+                <button type="button" onClick="handleAdd()">추가</button>
+              </div>
+              <ul class="todolist"></ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <footer>
+        <p>멋쟁이 사자처럼 FrontEnd BootCamp</p>
+      </footer>
+    </div>
+
+    <script>
+      // 더미 배열 데이터
+      let listItem = [
+        { no: 1, title: "밥 먹기", done: true },
+        { no: 2, title: "공부하기", done: false },
+        { no: 3, title: "자기", done: false },
+      ];
+
+      // 하나의 돔 객체를 생성하여 반환
+      const createDomNode = (item) => {
+        // return(
+        //   <li>
+        //     <span>1</span>
+        //     <span><s>샘플1</s></span>
+        //     <button type="button">삭제</button>
+        //   </li>
+        // );
+
+        // li
+        const liEle = document.createElement("li");
+
+        // no
+        const noEle = document.createElement("span");
+
+        // title
+        const titleEle = document.createElement("span");
+
+        // button
+        const deleteEle = document.createElement("button");
+
+        // 순번 텍스트(no)
+        const noTxt = document.createTextNode(item.no);
+
+        // 타이틀 텍스트(title)
+        const titleTxt = document.createTextNode(item.title);
+
+        // 삭제 텍스트
+        const deleteTxt = document.createTextNode("삭제");
+
+        // <span>1(순번 텍스트)</span>
+        noEle.appendChild(noTxt);
+
+        // s
+        const sEle = document.createElement("s");
+        // item.done 값에 따라 title 취소선 여부 결정
+        if (item.done) {
+          sEle.appendChild(titleTxt);
+          titleEle.appendChild(sEle);
+        } else {
+          titleEle.appendChild(titleTxt);
+        }
+
+        // <button type="button">삭제</button>
+        deleteEle.setAttribute("type", "button");
+        deleteEle.appendChild(deleteTxt);
+
+        // <li> span span button </li>
+        liEle.appendChild(noEle);
+        liEle.appendChild(titleEle);
+        liEle.appendChild(deleteEle);
+
+        titleEle.setAttribute("onclick", `toggleDone(${item.no})`);
+        liEle.setAttribute("data-no", `${item.no}`);
+        return liEle;
+      };
+
+      // 초기 화면 렌더링 함수
+      const rendering = () => {
+        const ulEle = document.querySelector(".todolist");
+        listItem.forEach((item) => {
+          const liEle = createDomNode(item);
+          ulEle.appendChild(liEle);
+        });
+      };
+
+      // '추가' 버튼 클릭 이벤트 함수
+      const handleAdd = () => {
+        const inputEle = document.querySelector(".todoinput > input");
+        console.log(inputEle);
+        if (inputEle.value.trim() !== "") {
+          addList(inputEle.value);
+        }
+      };
+
+      // 추가 함수
+      const addList = (newTitle) => {
+        // 새로운 아이템 객체
+        const newItem = {
+          no: listItem[listItem.length - 1].no + 1,
+          title: newTitle,
+          done: false,
+        };
+
+        // 배열에 추가
+        listItem.push(newItem);
+
+        // 화면에 추가
+        const ulEle = document.querySelector(".todolist");
+        const newLiEle = createDomNode(newItem); // 아이템 객체의  데이터를 넣어 돔 노드로 만들기
+        ulEle.appendChild(newLiEle);
+      };
+
+      // 완료, 미완료 토글 함수
+      const toggleDone = (no) => {
+        // 배열 done값 조작(토글)
+        let selectedItem = listItem.find((item) => item.no === no);
+        selectedItem.done = !selectedItem.done;
+
+        // 화면 갱신
+        const selectedItemElem = document.querySelector(
+          `.todolist > li[data-no="${no}"]`
+        );
+        const titleSpanEle = selectedItemElem.children[1];
+        if (selectedItem.done) {
+          // <span>샘플1</span> → <span><s>샘플1</s></span>
+          const sEle = document.createElement("s");
+          sEle.appendChild(titleSpanEle.firstChild);
+          titleSpanEle.appendChild(sEle);
+        } else {
+          // <span><s>샘플1</s></span> → <span>샘플1</span>
+          titleSpanEle.appendChild(titleSpanEle.firstChild.firstChild);
+          titleSpanEle.firstChild.remove();
+        }
+      };
+
+      rendering();
+    </script>
+  </body>
+</html>
