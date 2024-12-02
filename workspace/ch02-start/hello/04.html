@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello - React :()</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function App() {
+      return <h1>Hello JSX</h1>
+      // return React.createElement('h1', null, 'Hello React');
+      // 자바스크립트 코드 내에서 마크업을 리턴할수는 없으므로 바벨을 통해 컴파일링(?) 작업이 필요하다. 이에 따라 head에 바벨 라이브러리를 추가하였다.
+    }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+
+</html>

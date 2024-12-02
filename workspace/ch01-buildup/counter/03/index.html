@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter</title>
+  </head>
+  <body>
+    <!-- <div id="app">
+      <header>
+        <h1>Counter - JS</h1>
+        <p>파일 경로: <span id="filepath"></span></p>
+      </header>
+      <div id="counter">
+        <button type="button" onclick="handleDown()">-</button>
+        <button type="button" onclick="handleReset(event)">0</button>
+        <button type="button" onclick="handleUp()">+</button>
+        <span>0</span>
+      </div>
+    </div> -->
+    <div id="root"></div>
+
+    <script type="module">
+      import library from "../library.js";
+
+      // <h1>Counter - JS</h1>
+      const h1Elem = document.createElement("h1");
+      const h1Txt = document.createTextNode("Counter - JS로 UI 구성");
+      h1Elem.appendChild(h1Txt);
+
+      // <p>파일 경로: <span id="filepath"></span></p>
+      const spanElem = document.createElement("span");
+      spanElem.setAttribute("id", "filepath");
+
+      const pElem = document.createElement("p");
+      const pTxt = document.createTextNode("파일 경로: ");
+      pElem.appendChild(pTxt);
+      pElem.appendChild(spanElem);
+
+      // <header>
+      const headerElem = document.createElement("header");
+      headerElem.appendChild(h1Elem);
+      headerElem.appendChild(pElem);
+
+      // <button type="button" onclick="handleDown()">-</button>
+      const downBtnElem = document.createElement("button");
+      const downBtnTxt = document.createTextNode("-");
+      downBtnElem.setAttribute("type", "button");
+      downBtnElem.setAttribute("onclick", "handleDown()");
+      downBtnElem.appendChild(downBtnTxt);
+
+      // <button type="button" onclick="handleReset(event)">0</button>
+      const resetBtnElem = document.createElement("button");
+      const resetBtnTxt = document.createTextNode("0");
+      resetBtnElem.setAttribute("type", "button");
+      resetBtnElem.setAttribute("onclick", "handleReset()");
+      resetBtnElem.appendChild(resetBtnTxt);
+
+      // <button type="button" onclick="handleUp()">+</button>
+      const upBtnElem = document.createElement("button");
+      const upBtnTxt = document.createTextNode("+");
+      upBtnElem.setAttribute("type", "button");
+      upBtnElem.setAttribute("onclick", "handleUp()");
+      upBtnElem.appendChild(upBtnTxt);
+
+      // <span>0</span>
+      const spanNumElem = document.createElement("span");
+      const spanNumTxt = document.createTextNode(0);
+      spanNumElem.appendChild(spanNumTxt);
+
+      // <div id="counter">
+      const counterElem = document.createElement("div");
+      counterElem.setAttribute("id", "counter");
+
+      counterElem.appendChild(downBtnElem);
+      counterElem.appendChild(resetBtnElem);
+      counterElem.appendChild(upBtnElem);
+      counterElem.appendChild(spanNumElem);
+      counterElem.style.display = "flex";
+      counterElem.style.gap = "4px";
+
+      // <div id="app">
+      const appElem = document.createElement("div");
+      appElem.setAttribute("id", "app");
+
+      appElem.appendChild(headerElem);
+      appElem.appendChild(counterElem);
+
+      const rootElem = document.getElementById("root");
+      rootElem.appendChild(appElem);
+    </script>
+
+    <script type="text/javascript">
+      document.querySelector("#filepath").textContent = `ch${
+        document.URL.split("/ch")[1]
+      }`;
+    </script>
+
+    <script type="text/javascript">
+      let count = 0;
+
+      const handleDown = () => {
+        // 데이터 갱신
+        count--;
+
+        // 화면 갱신
+        const counterSpan = document.querySelector("#counter > span");
+        counterSpan.textContent = count;
+      };
+
+      const handleUp = () => {
+        count++;
+
+        // 화면 갱신
+        const counterSpan = document.querySelector("#counter > span");
+        counterSpan.textContent = count;
+      };
+
+      const handleReset = (event) => {
+        count = 0;
+
+        // 화면 갱신
+        const counterSpan = document.querySelector("#counter > span");
+        counterSpan.textContent = count;
+      };
+    </script>
+  </body>
+</html>
