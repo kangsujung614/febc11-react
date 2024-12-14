@@ -14,6 +14,7 @@ export default function List() {
   // /:type
   // localhost/info => useParams()의 리턴값 { type: info }
   const { type } = useParams();
+  console.log(type);
 
   const { data } = useQuery({
     queryKey: ['posts', type],
@@ -30,17 +31,32 @@ export default function List() {
 
   const list = data.item.map(item => <ListItem key={item._id} item={ item } />);
 
+  // 게시판 타입별 다른 제목 출력
+  let title, content;
+  switch (type) {
+    case "info":
+      title = "정보 공유";
+      content = "유용한 정보를 나누고 공유하세요."
+      break;
+    case "free":
+      title = '자유 게시판';
+      content = "자유롭게 이야기를 나누세요."
+      break;
+    case "brunch":
+      title = "브런치스토리";
+      content = "브런치스토리에 담긴 아름다운 작품을 감상해 보세요."
+      break;
+  }
   return (
     <>
       <Helmet>
-        {/* 일단 하드코딩 */}
-        <title>정보 공유 - 멋사컴</title>
-        <meta property="og:title" content="정보 공유 게시판" />
-        <meta property="og:description" content="유용한 정보를 나누고 공유하세요." />
+        <title>{title} - 멋사컴</title>
+        <meta property="og:title" content={title}/>
+        <meta property="og:description" content={content} />
       </Helmet>
       <main className="min-w-80 p-10">
         <div className="text-center py-4">
-          <h2 className="pb-4 text-2xl font-bold text-gray-700 dark:text-gray-200">정보 공유</h2>
+          <h2 className="pb-4 text-2xl font-bold text-gray-700 dark:text-gray-200">{title}</h2>
         </div>
         <div className="flex justify-end mr-4">
           
