@@ -44,7 +44,7 @@ export default function Detail() {
   return (
     <>
       <Helmet>
-        <title>{ data.item.title } - 멋사컴즈</title>
+        <title>{ data.item.title } - 멋사컴</title>
         <meta property="og:title" content={ data.item.title } />
         <meta property="og:description" content={ data.item.content } />
       </Helmet>
